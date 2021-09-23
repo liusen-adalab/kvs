@@ -2,11 +2,13 @@ use clap::arg_enum;
 use kvs::{KvStore, KvsEngine, KvsServer, Result, SledKvsEngine};
 use log::LevelFilter;
 use log::{error, info, warn};
+use core::num;
 use std::env::current_dir;
 use std::fs;
 use std::net::SocketAddr;
 use std::process::exit;
 use structopt::StructOpt;
+use kvs::thread_pool::{ThreadPool, SharedQueueThreadPool};
 
 const DEFAUTL_ADDR: &str = "127.0.0.1:4000";
 const DEFAULT_ENGINE: Engine = Engine::Kvs;
@@ -71,7 +73,8 @@ fn run(cmd: Command) -> Result<()> {
 }
 
 fn run_with_engine<E: KvsEngine>(engine: E, addr: SocketAddr) -> Result<()> {
-    let server = KvsServer::new(engine);
+    let thread_pool = SharedQueueThreadPool::new(num_cpus::get() as u32)?;
+    let server = KvsServer::new(engine, thread_pool);
     server.run(addr)
 }
 

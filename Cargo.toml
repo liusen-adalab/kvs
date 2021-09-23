@@ -14,6 +14,10 @@ structopt = "0.3.22"
 log = "0.4"
 env_logger = "0.9"
 sled = "0.34"
+crossbeam = "0.8"
+rayon = "1.0"
+crossbeam-skiplist = { git = "https://github.com/crossbeam-rs/crossbeam.git", branch = "master" }
+num_cpus = "1.10.0"
 
 [dev-dependencies]
 assert_cmd = "0.11.0"
@@ -21,3 +25,7 @@ predicates = "1.0.0"
 tempfile = "3.0.7"
 walkdir = "2.2.7"
 
+criterion = "0.3"
+crossbeam-utils = "0.6.5"
+rand = "0.6.5"
+panic-control = "0.1.4"
