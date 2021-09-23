@@ -2,6 +2,7 @@ use clap::arg_enum;
 use kvs::{KvStore, KvsEngine, KvsServer, Result, SledKvsEngine};
 use log::LevelFilter;
 use log::{error, info, warn};
+use core::num;
 use std::env::current_dir;
 use std::fs;
 use std::net::SocketAddr;
