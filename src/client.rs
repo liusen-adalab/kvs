@@ -8,14 +8,14 @@ use std::{
     net::{TcpStream, ToSocketAddrs},
 };
 
-///
+/// key value store client
 pub struct KvsClient {
     reader: Deserializer<IoRead<BufReader<TcpStream>>>,
     writer: BufWriter<TcpStream>,
 }
 
 impl KvsClient {
-    ///
+    /// Connect to `addr` to access `KvsServer`
     pub fn connect<A: ToSocketAddrs>(addr: A) -> Result<Self> {
         let tcp_reader = TcpStream::connect(addr)?;
         let tcp_writer = tcp_reader.try_clone()?;
@@ -26,7 +26,7 @@ impl KvsClient {
         })
     }
 
-    ///
+    /// Get the value of the given key from the server
     pub fn get(&mut self, key: String) -> Result<Option<String>> {
         let request = Request::Get { key };
         serde_json::to_writer(&mut self.writer, &request)?;
@@ -39,7 +39,7 @@ impl KvsClient {
         }
     }
 
-    ///
+    /// Set the value of a string key in the server.
     pub fn set(&mut self, key: String, value: String) -> Result<()> {
         serde_json::to_writer(&mut self.writer, &Request::Set { key, value })?;
         self.writer.flush()?;
@@ -51,7 +51,7 @@ impl KvsClient {
         }
     }
 
-    ///
+    /// Remove a string key in the server.
     pub fn rm(&mut self, key: String) -> Result<()> {
         let request = Request::Remove { key };
         serde_json::to_writer(&mut self.writer, &request)?;

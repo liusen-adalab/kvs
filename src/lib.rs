@@ -5,6 +5,7 @@ mod error;
 mod client;
 mod server;
 mod common;
+pub mod thread_pool;
 
 pub use error::{Result, KvsError};
 pub use client::KvsClient;

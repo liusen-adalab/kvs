@@ -7,8 +7,9 @@ const ADDRESS_FORMAT: &str = "IP:PORT";
 
 #[derive(StructOpt, Debug)]
 enum Command {
-    #[structopt(name = "set")]
+    #[structopt(name = "set", about = "Set the value of a string key to a string")]
     Set {
+        #[structopt(name = "KEY", help = "A string key")]
         key: String,
         value: String,
         #[structopt(
@@ -33,8 +34,9 @@ enum Command {
         addr: SocketAddr,
     },
 
-    #[structopt(name = "rm")]
+    #[structopt(name = "rm", about = "Remove a given string key")]
     Remove {
+        #[structopt(name = "KEY", help = "A string key")]
         key: String,
         #[structopt(
             long,
